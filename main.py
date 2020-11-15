@@ -1,5 +1,6 @@
 import numpy as np
 
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as plt_anim
 
@@ -9,6 +10,7 @@ if __name__ == "__main__":
     ising = IsingModel(size=128, init_tempetature=1)
     stats = np.zeros(shape=(3, 512))
 
+    matplotlib.rcParams["toolbar"] = "None"
     fig = plt.figure(figsize=(12, 6), constrained_layout=True)
     fig.canvas.set_window_title("Wizualizacja modelu Isinga")
     spec = fig.add_gridspec(3, 2)
