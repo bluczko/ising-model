@@ -34,5 +34,8 @@ class IsingModel:
     def restart(self):
         self.system = IsingModel.__init_system(self.system.shape[0])
 
-    def step(self, epochs: int):
+    def step(self, epochs: int = 0):
+        if epochs == 0:
+            epochs = np.prod(self.system.size)
+
         self.system = isc.update_cells(self.system, epochs, self.temperature)
