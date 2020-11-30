@@ -5,7 +5,8 @@ from ising.model import IsingModel
 
 
 pg.init()
-display = pg.display.set_mode(size=(512, 512))
+resolution = (1024, 1024)
+display = pg.display.set_mode(resolution, pg.RESIZABLE)
 
 pg.display.set_caption("Model Isinga", "")
 pg.key.set_repeat(450, 100)
@@ -19,6 +20,9 @@ while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
+        elif event.type == pg.VIDEORESIZE:
+            resolution = (event.w, event.h)
+            display = pg.display.set_mode(resolution, pg.RESIZABLE)
 
     pressed = pg.key.get_pressed()
     update_caption = False
@@ -39,10 +43,10 @@ while running:
     stats[2, i] = ising.heat_capacity
     sm = stats.mean(axis=1)
 
-    pg.display.set_caption(f"Model Isinga: T={sm[0]:.1f}, M={sm[1]:.2f}, H={sm[2]:.2f}", "")
+    pg.display.set_caption(f"Model Isinga: T={sm[0]:.1f}, M={sm[1]:.6f}, H={sm[2]:.2f}", "")
 
     system_surface = pg.surfarray.make_surface(ising.system)
-    system_surface = pg.transform.scale2x(system_surface)
+    system_surface = pg.transform.scale(system_surface, resolution)
 
     display.fill((0, 0, 0))
     display.blit(system_surface, dest=(0, 0))
